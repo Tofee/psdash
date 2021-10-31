@@ -103,7 +103,7 @@ class LogReader(object):
     def set_tail_position(self):
         stat = os.fstat(self.fp.fileno())
         if stat.st_size >= self.buffer_size:
-            self.fp.seek(-self.buffer_size, os.SEEK_END)
+            self.fp.seek(stat.st_size-self.buffer_size)
         else:
             self.fp.seek(0)
 
@@ -151,7 +151,6 @@ class Logs(object):
     def add_available(self, filename):
         # quick verification that it exists and can be read
         try:
-            filename = filename.decode('utf-8')
             f = open(filename)
             f.close()
         except IOError as e:

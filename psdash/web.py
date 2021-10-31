@@ -277,7 +277,7 @@ def view_disks():
 @webapp.route('/logs')
 def view_logs():
     available_logs = current_service.get_logs()
-    available_logs = sorted(available_logs, key=lambda x1: locale.strxfrm(x1['path']))
+    # sorted(available_logs, key=lambda x1: locale.strxfrm(x1['path']))
 
     return render_template(
         'logs.html',
