@@ -8,7 +8,7 @@ import argparse
 import logging
 import socket
 import urllib
-import urllib2
+import urllib3
 from logging import getLogger
 from flask import Flask
 import zerorpc
@@ -106,7 +106,7 @@ class PsDashRunner(object):
 
     def _load_args_config(self, args):
         config = {}
-        for k, v in vars(self._get_args(args)).iteritems():
+        for k, v in vars(self._get_args(args)).items():
             if v:
                 key = 'PSDASH_%s' % k.upper() if k != 'debug' else 'DEBUG'
                 config[key] = v
@@ -238,19 +238,19 @@ class PsDashRunner(object):
         register_url = '%s/register?%s' % (self.app.config['PSDASH_REGISTER_TO'], urllib.urlencode(url_args))
 
         if 'PSDASH_AUTH_USERNAME' in self.app.config and 'PSDASH_AUTH_PASSWORD' in self.app.config:
-            auth_handler = urllib2.HTTPBasicAuthHandler()
+            auth_handler = urllib3.HTTPBasicAuthHandler()
             auth_handler.add_password(
                 realm='psDash login required',
                 uri=register_url,
                 user=self.app.config['PSDASH_AUTH_USERNAME'],
                 passwd=self.app.config['PSDASH_AUTH_PASSWORD']
             )
-            opener = urllib2.build_opener(auth_handler)
-            urllib2.install_opener(opener)
+            opener = urllib3.build_opener(auth_handler)
+            urllib3.install_opener(opener)
 
         try:
-            urllib2.urlopen(register_url)
-        except urllib2.HTTPError as e:
+            urllib3.urlopen(register_url)
+        except urllib3.HTTPError as e:
             logger.error('Failed to register agent to "%s": %s', register_url, e)
 
     def _run_rpc(self):
