@@ -124,7 +124,25 @@ function init_updater() {
             cache: false,
             dataType: "html",
             success: function(resp){
-                $("#psdash").find(".main-content").html(resp);
+		let doc = new DOMParser().parseFromString(resp, 'application/xml');
+		// check that the first node is the same
+		if($("#psdash").find(".main-content>:first-child").prop("id") ===
+		   doc.documentElement.getAttribute("id"))
+		{
+		    // Same: just update the dynamic nodes
+		    let currentDynamicNodes = $("#psdash").find(".dynamic-value");
+		    let newDynamicNodes = doc.querySelectorAll(".dynamic-value");
+
+		    for(let i=0; i<currentDynamicNodes.length; ++i) {
+		        currentDynamicNodes[i].outerHTML = newDynamicNodes[i].outerHTML;
+		    }
+
+		}
+		else
+		{
+		    $("#psdash").find(".main-content").html(resp);
+		}
+
             }
         });
     }

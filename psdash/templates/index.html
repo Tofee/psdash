@@ -3,33 +3,33 @@
     <div id="dashboard">
         <div class="box cpu">
             <div class="box-header">
-                <span>CPU</span>
+                <div><span>CPU</span></div>
             </div>
             <div class="box-content">
                 <table class="table">
                     <tr>
                         <td class="label-col">Load average</td>
-                        <td class="load" style="word-spacing: 10px;">{{ load_avg[0]|round(2) }} {{ load_avg[1]|round(2) }} {{ load_avg[2]|round(2) }}</td>
+                        <td class="load dynamic-value" style="word-spacing: 10px;">{{ load_avg[0]|round(2) }} {{ load_avg[1]|round(2) }} {{ load_avg[2]|round(2) }}</td>
                     </tr>
                     <tr>
                         <td class="label-col">User</td>
-                        <td class="user">{{ cpu.user }} %</td>
+                        <td class="user dynamic-value" id="cpu-user">{{ cpu.user }} %</td>
                     </tr>
                     <tr>
                         <td class="label-col">System</td>
-                        <td class="system">{{ cpu.system }} %</td>
+                        <td class="system dynamic-value">{{ cpu.system }} %</td>
                     </tr>
                     <tr>
                         <td class="label-col">Idle</td>
-                        <td class="idle">{{ cpu.idle }} %</td>
+                        <td class="idle dynamic-value">{{ cpu.idle }} %</td>
                     </tr>
                     <tr>
                         <td class="label-col">I/O wait</td>
-                        <td class="iowait">{{ cpu.iowait }} %</td>
+                        <td class="iowait dynamic-value">{{ cpu.iowait }} %</td>
                     </tr>
                     <tr>
                         <td class="label-col">Cores</td>
-                        <td class="iowait">{{ num_cpus }}</td>
+                        <td class="iowait dynamic-value">{{ num_cpus }}</td>
                     </tr>
                 </table>
             </div>
@@ -42,23 +42,23 @@
                 <table class="table">
                     <tr>
                         <td class="label-col">Total</td>
-                        <td class="total">{{ memory.total|filesizeformat }}</td>
+                        <td class="total dynamic-value">{{ memory.total|filesizeformat }}</td>
                     </tr>
                     <tr>
                         <td class="label-col">Available</td>
-                        <td class="available">{{ memory.available|filesizeformat }}</td>
+                        <td class="available dynamic-value">{{ memory.available|filesizeformat }}</td>
                     </tr>
                     <tr>
                         <td class="label-col">Used <small>(excl. cache &amp; buffers)</small></td>
-                        <td class="used_excl">{{ (memory.total - memory.available)|filesizeformat }} ({{ memory.percent }} %)</td>
+                        <td class="used_excl dynamic-value">{{ (memory.total - memory.available)|filesizeformat }} ({{ memory.percent }} %)</td>
                     </tr>
                     <tr>
                         <td class="label-col">Used <small>(incl. cache &amp; buffers)</small></td>
-                        <td class="used_incl">{{ memory.used|filesizeformat }}</td>
+                        <td class="used_incl dynamic-value">{{ memory.used|filesizeformat }}</td>
                     </tr>
                     <tr>
                         <td class="label-col">Free</td>
-                        <td class="free">{{ memory.free|filesizeformat }}</td>
+                        <td class="free dynamic-value">{{ memory.free|filesizeformat }}</td>
                     </tr>
                 </table>
             </div>
@@ -68,7 +68,7 @@
                 <span>Network</span>
             </div>
             <div class="box-content">
-                <table class="table">
+                <table class="table network-table dynamic-value">
                     <thead>
                         <tr>
                             <th>Interface</th>
@@ -95,7 +95,7 @@
                 <span>Disks</span>
             </div>
             <div class="box-content">
-                <table class="table">
+                <table class="table disks-table dynamic-value">
                     <thead>
                         <tr>
                             <th>Device</th>
@@ -127,23 +127,23 @@
                 <table class="table">
                     <tr>
                         <td class="label-col">Total</td>
-                        <td class="total">{{ swap.total|filesizeformat }}</td>
+                        <td class="total dynamic-value">{{ swap.total|filesizeformat }}</td>
                     </tr>
                     <tr>
                         <td class="label-col">Used</td>
-                        <td class="used">{{ swap.used|filesizeformat }} ({{ swap.percent }} %)</td>
+                        <td class="used dynamic-value">{{ swap.used|filesizeformat }} ({{ swap.percent }} %)</td>
                     </tr>
                     <tr>
                         <td class="label-col">Free</td>
-                        <td class="free">{{ swap.free|filesizeformat }}</td>
+                        <td class="free dynamic-value">{{ swap.free|filesizeformat }}</td>
                     </tr>
                     <tr>
                         <td class="label-col">Swapped in</td>
-                        <td class="swapped-in">{{ swap.swapped_in|filesizeformat }}</td>
+                        <td class="swapped-in dynamic-value">{{ swap.swapped_in|filesizeformat }}</td>
                     </tr>
                     <tr>
                         <td class="label-col">Swapped out</td>
-                        <td class="swapped-out">{{ swap.swapped_out|filesizeformat }}</td>
+                        <td class="swapped-out dynamic-value">{{ swap.swapped_out|filesizeformat }}</td>
                     </tr>
                 </table>
             </div>
@@ -153,7 +153,7 @@
                 <span>Users</span>
             </div>
             <div class="box-content">
-                <table class="table">
+                <table class="table users-table dynamic-value">
                     <thead>
                         <tr>
                             <th>User</th>

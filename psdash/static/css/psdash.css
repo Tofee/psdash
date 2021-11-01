@@ -161,7 +161,8 @@ a:hover {
 }
 
 #dashboard div.box {
-    display:block;
+    float: left;
+    /* display:block; */
 }
 
 #dashboard div.box.cpu {
