@@ -160,9 +160,15 @@ a:hover {
     min-height: 310px;
 }
 
+#dashboard {
+	display: flex;
+	flex-wrap: wrap;
+}
+
 #dashboard div.box {
-    float: left;
-    /* display:block; */
+    display:block;
+    flex-grow: 1;
+}
 }
 
 #dashboard div.box.cpu {
