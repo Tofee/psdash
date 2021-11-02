@@ -169,6 +169,10 @@ a:hover {
     display:block;
     flex-grow: 1;
 }
+
+#dashboard div.box-header {
+    display:grid;
+    grid-template-columns: repeat(2, auto); 
 }
 
 #dashboard div.box.cpu {

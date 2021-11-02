@@ -4,6 +4,7 @@
         <div class="box cpu">
             <div class="box-header">
                 <div><span>CPU</span></div>
+                <canvas class="smoothiechart" data-graph-variable="cpu-user" width="200" height="50"></canvas>
             </div>
             <div class="box-content">
                 <table class="table">
@@ -37,6 +38,8 @@
         <div class="box memory">
             <div class="box-header">
                 <span>Memory</span>
+                <canvas class="smoothiechart" data-graph-variable="mem-percent" width="200" height="50"></canvas>
+                <div hidden="1" id="mem-percent" class="dynamic-value">{{ memory.percent }} %</div>
             </div>
             <div class="box-content">
                 <table class="table">

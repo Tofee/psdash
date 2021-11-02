@@ -114,6 +114,25 @@ function init_log() {
 }
 
 var skip_updates = false;
+var smoothie_chart_options = {
+	millisPerPixel:300,
+	interpolation:'linear',
+	grid: {
+		fillStyle:'transparent',
+		millisPerLine:6000,
+		verticalSections:4
+	},
+	labels: {
+		disabled: true
+	},
+	maxValue:100,minValue:0
+};
+var smoothie_timeserie_options = {
+	lineWidth:0.6,
+	strokeStyle:'#1c71d8',
+	fillStyle:'rgba(153,193,241,0.30)'
+};
+var chart_timeseries = {};
 
 function init_updater() {
     function update() {
@@ -137,6 +156,23 @@ function init_updater() {
 		        currentDynamicNodes[i].outerHTML = newDynamicNodes[i].outerHTML;
 		    }
 
+			// Now create/update the charts, if needed
+			$("#psdash").find(".smoothiechart").each(function(index) {
+				let graph_variable = $(this).data("graph-variable");
+				if (!chart_timeseries[graph_variable]) {
+					// no chart created yet for that canvas: do it now
+					let new_chart = new SmoothieChart(smoothie_chart_options);
+					new_chart.streamTo($(this)[0], 1000 /*delay*/);
+					let new_chart_timeseries = new TimeSeries();
+					new_chart.addTimeSeries(new_chart_timeseries, smoothie_timeserie_options);
+
+					chart_timeseries[graph_variable] = new_chart_timeseries;
+				}
+				// now that the timeseries is there, add the value
+		        let elt = $("#" + graph_variable);
+		        let elt_value = elt.text().slice(0, -1);
+		        chart_timeseries[graph_variable].append(new Date().getTime(), elt_value);
+			});
 		}
 		else
 		{
