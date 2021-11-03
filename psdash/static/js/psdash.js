@@ -144,12 +144,11 @@ function init_updater() {
             dataType: "html",
             success: function(resp){
 		let doc = new DOMParser().parseFromString(resp, 'application/xml');
-		// check that the first node is the same
-		if($("#psdash").find(".main-content>:first-child").prop("id") ===
-		   doc.documentElement.getAttribute("id"))
+
+	    let currentDynamicNodes = $("#psdash").find(".dynamic-value");
+		if(currentDynamicNodes.length>0)
 		{
-		    // Same: just update the dynamic nodes
-		    let currentDynamicNodes = $("#psdash").find(".dynamic-value");
+		    // Just update the dynamic nodes
 		    let newDynamicNodes = doc.querySelectorAll(".dynamic-value");
 
 		    for(let i=0; i<currentDynamicNodes.length; ++i) {
@@ -179,11 +178,15 @@ function init_updater() {
 		    $("#psdash").find(".main-content").html(resp);
 		}
 
+            },
+            complete: function(xhr,status) {
+            	// whatever happens, setup the next update
+           	    setTimeout(update, 3000);
             }
         });
     }
 
-    setInterval(update, 3000);
+    setTimeout(update, 3000);
 }
 
 function init_connections_filter() {
