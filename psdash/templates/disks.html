@@ -13,9 +13,9 @@
                             <th>Mounted</th>
                             <th>Type</th>
                             <th>Options</th>
-                            <th>Space (total)</th>
-                            <th>Space (used)</th>
-                            <th>Space (free)</th>
+                            <th>Space<br/>(total)</th>
+                            <th style="text-align:center">Space<br/>(used)</th>
+                            <th>Space<br/>(free)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,7 +26,7 @@
                                 <td>{{ d.type }}</td>
                                 <td>{{ d.options }}</td>
                                 <td>{{ d.space_total|filesizeformat }}</td>
-                                <td>{{ d.space_used|filesizeformat }} ({{ d.space_used_percent }} %)</td>
+                                <td style="white-space:nowrap">{{ d.space_used|filesizeformat }} ({{ d.space_used_percent }} %)</td>
                                 <td>{{ d.space_free|filesizeformat }}</td>
                             </tr>
                             {% endfor %}
