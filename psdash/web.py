@@ -262,7 +262,7 @@ def view_networks():
 
 @webapp.route('/disks')
 def view_disks():
-    disks = current_service.get_disks(all_partitions=True)
+    disks = current_service.get_disks(all_partitions=False)
     io_counters = current_service.get_disks_counters().items()
     io_counters = sorted(io_counters, key=lambda x: x[1]['read_count'], reverse=True)
     return render_template(

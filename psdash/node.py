@@ -106,6 +106,8 @@ class LocalService(object):
     def get_disks(self, all_partitions=False):
         disks = []
         for dp in psutil.disk_partitions(all_partitions):
+            if dp.device[0:9] == "/dev/loop":
+                continue
             usage = psutil.disk_usage(dp.mountpoint)
             disk = {
                 'device': dp.device,
@@ -122,7 +124,7 @@ class LocalService(object):
         return disks
 
     def get_disks_counters(self, perdisk=True):
-        return dict((dev, c._asdict()) for dev, c in psutil.disk_io_counters(perdisk=perdisk).items())
+        return dict((dev, c._asdict()) for dev, c in psutil.disk_io_counters(perdisk=perdisk).items() if dev[0:4] != "loop")
 
     def get_users(self):
         return [u._asdict() for u in psutil.users()]
