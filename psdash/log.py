@@ -185,6 +185,7 @@ class Logs(object):
         self.available = set()
 
     def add_patterns(self, patterns):
+        previous_length = len(self.available)
         i = 0
         for p in patterns:
             for log_file in glob2.iglob(p):
@@ -195,7 +196,8 @@ class Logs(object):
                     except LogError as e:
                         logger.warning(e)
 
-        logger.info('Added %d log file(s)', i)
+        if(i>previous_length):
+            logger.info('Added %d log file(s)', i-previous_length)
         return i
 
     def clear(self):
