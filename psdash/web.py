@@ -120,7 +120,7 @@ def index():
         'users': current_service.get_users(),
         'net_interfaces': netifs,
         'page': 'overview',
-        'is_xhr': request.is_xhr
+        'is_xhr': (request.headers.get("X-Requested-With") == "XMLHttpRequest")
     }
 
     return render_template('index.html', **data)
@@ -154,7 +154,7 @@ def processes(sort='pid', order='asc', filter='user'):
         num_procs=num_procs,
         num_user_procs=num_user_procs,
         page='processes',
-        is_xhr=request.is_xhr
+        is_xhr=(request.headers.get("X-Requested-With") == "XMLHttpRequest")
     )
 
 
@@ -180,7 +180,7 @@ def process(pid, section):
         'process': current_service.get_process(pid),
         'section': section,
         'page': 'processes',
-        'is_xhr': request.is_xhr
+        'is_xhr': (request.headers.get("X-Requested-With") == "XMLHttpRequest")
     }
 
     if section == 'environment':
@@ -254,7 +254,7 @@ def view_networks():
         socket_families=socket_families,
         socket_types=socket_types,
         states=states,
-        is_xhr=request.is_xhr,
+        is_xhr=(request.headers.get("X-Requested-With") == "XMLHttpRequest"),
         num_conns=len(conns),
         **form_values
     )
@@ -270,7 +270,7 @@ def view_disks():
         page='disks',
         disks=disks,
         io_counters=io_counters,
-        is_xhr=request.is_xhr
+        is_xhr=(request.headers.get("X-Requested-With") == "XMLHttpRequest")
     )
 
 
@@ -283,7 +283,7 @@ def view_logs():
         'logs.html',
         page='logs',
         logs=available_logs,
-        is_xhr=request.is_xhr
+        is_xhr=(request.headers.get("X-Requested-With") == "XMLHttpRequest")
     )
 
 
@@ -297,11 +297,11 @@ def view_log():
         content = current_service.read_log(filename, session_key=session_key, seek_tail=seek_tail)
     except KeyError:
         error_msg = 'File not found. Only files passed through args are allowed.'
-        if request.is_xhr:
+        if (request.headers.get("X-Requested-With") == "XMLHttpRequest"):
             return error_msg
         return render_template('error.html', error=error_msg), 404
 
-    if request.is_xhr:
+    if (request.headers.get("X-Requested-With") == "XMLHttpRequest"):
         return content
 
     return render_template('log.html', content=content, filename=filename)
