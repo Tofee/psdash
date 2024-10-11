@@ -158,6 +158,8 @@ a:hover {
     margin-right: 20px;
     margin-bottom: 20px;
     min-height: 310px;
+
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 #dashboard {
